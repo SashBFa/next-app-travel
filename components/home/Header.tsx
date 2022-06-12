@@ -1,3 +1,5 @@
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import Spacing from "../Spacing";
 
@@ -47,9 +49,10 @@ const Header = () => {
   }, []);
 
   return (
-    <header
-      className={`h-screen bg-cover bg-center ${bgImg} flex flex-col justify-end text-white`}
-    >
+    <header className={`h-screen flex flex-col justify-end text-white`}>
+      <div
+        className={`fixed -z-10 h-full w-full bg-cover bg-center ${bgImg}`}
+      />
       <Spacing>
         <h1 className="font-semibold text-5xl md:text-8xl 2xl:text-9xl drop-shadow-md">
           Experience. <br /> Shared.
@@ -58,6 +61,9 @@ const Header = () => {
           Welcome to the Modern Group Travel Company !
         </h3>
       </Spacing>
+      <span className="absolute left-2/4 -translate-x-2/4 animate-bounce border-2 border-white rounded-full w-10 h-10 flex items-center justify-center drop-shadow-md">
+        <FontAwesomeIcon icon={faArrowDown} className="text-2xl" />
+      </span>
     </header>
   );
 };

@@ -1,13 +1,21 @@
 import Head from "next/head";
-import React from "react";
 
-const Meta = () => {
+type metaProps = {
+  title?: string;
+  description?: string;
+};
+
+const Meta = ({ title, description }: metaProps) => {
   return (
     <Head>
-      <title></title>
-      <meta />
+      <title>SashBFaTravel - {title}</title>
+      <meta name="description" content={description} />
     </Head>
   );
+};
+Meta.defaultProps = {
+  title: "E-commerce pour livre d'occasion",
+  description: " Vendez, achetez et retrouver les livres qui vous plaisent",
 };
 
 export default Meta;
