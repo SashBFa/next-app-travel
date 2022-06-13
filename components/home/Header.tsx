@@ -51,13 +51,13 @@ const Header = () => {
   return (
     <header className={`h-screen flex flex-col justify-end text-white`}>
       <div
-        className={`fixed -z-10 h-full w-full bg-cover bg-center ${bgImg}`}
+        className={`fixed -z-10 h-full w-full bg-cover bg-center ${bgImg} after:content-[''] after:absolute after:w-full after:h-full after:bg-gradient-to-b from-black/70 `}
       />
       <Spacing>
-        <h1 className="font-semibold text-5xl md:text-8xl 2xl:text-9xl drop-shadow-md">
+        <h1 className="font-semibold text-5xl md:text-8xl 2xl:text-9xl drop-shadow-md text-left">
           Experience. <br /> Shared.
         </h1>
-        <h3 className="italic font-medium drop-shadow-md text-lg md:text-2xl mt-6 md:mt-16">
+        <h3 className="italic font-medium drop-shadow-md text-lg md:text-2xl mt-6 md:mt-16 text-left">
           Welcome to the Modern Group Travel Company !
         </h3>
       </Spacing>
