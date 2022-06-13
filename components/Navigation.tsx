@@ -99,25 +99,25 @@ const Navigation = () => {
         </button>
         {isOpen && (
           <div className="absolute w-[18.5rem] md:w-[40rem] lg:w-[48rem] right-0">
-            <ul className="absolute left-0 top-24 sm:top-20">
+            <ul className="absolute left-3 h-24 top-36 flex flex-col justify-between items-start before:content-[''] before:absolute before:w-0 before:h-0 before:-left-3 before:-top-14 before:border-solid before:border-l-[280px] md:before:border-l-[620px] lg:before:border-l-[750px] before:border-t-[160px] before:border-r-0 before:border-b-0 before:border-l-white/10 before:border-t-transparent before:border-r-transparent before:border-b-transparent animate-menu-left">
               {roads.slice(0, 3).map((road) => {
                 return (
-                  <li key={road.id} className="text-lg">
+                  <li key={road.id} className="text-xl">
                     <Link href={road.link}>{road.name}</Link>
                   </li>
                 );
               })}
             </ul>
-            <ul className="absolute right-0 top-20 flex flex-col items-end">
+            <ul className="absolute right-3 h-28 top-24 flex flex-col justify-between items-end before:content-[''] before:absolute before:w-0 before:h-0 before:-right-3 before:-top-2 before:border-solid before:border-l-0 before:border-t-0 before:border-r-[280px] md:before:border-r-[620px] lg:before:border-r-[750px] before:border-b-[160px] before:border-l-transparent before:border-t-transparent before:border-r-white/10 before:border-b-transparent animate-menu-right">
               {roads.slice(3, 6).map((road) => {
                 return (
-                  <li key={road.id} className="text-lg">
+                  <li key={road.id} className="text-xl">
                     <Link href={road.link}>{road.name}</Link>
                   </li>
                 );
               })}
             </ul>
-            <ul className="absolute animate-fade-in-down flex justify-between items-center w-20 right-12">
+            <ul className="absolute animate-social-icon flex justify-between items-center w-20 right-12">
               {roads.slice(6, 9).map((road) => {
                 return (
                   <li key={road.id} className="text-xl">

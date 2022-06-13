@@ -54,7 +54,7 @@ const Header = () => {
         className={`fixed -z-10 h-full w-full bg-cover bg-center ${bgImg} after:content-[''] after:absolute after:w-full after:h-full after:bg-gradient-to-b from-black/70 `}
       />
       <Spacing>
-        <h1 className="font-semibold text-5xl md:text-8xl 2xl:text-9xl drop-shadow-md text-left">
+        <h1 className="font-semibold text-5xl md:text-8xl 2xl:text-9xl drop-shadow-md text-left bg-clip-text text-transparent bg-gradient-to-r from-white to-white/10">
           Experience. <br /> Shared.
         </h1>
         <h3 className="italic font-medium drop-shadow-md text-lg md:text-2xl mt-6 md:mt-16 text-left">

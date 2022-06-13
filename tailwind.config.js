@@ -13,10 +13,30 @@ module.exports = {
         sans: ["Open Sans", ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
-        "fade-in-down": {
+        "social-icon": {
           "0%": {
             opacity: "0",
-            transform: "translateX(20px)",
+            transform: "translateX(30px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
+        "menu-right": {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(100%)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
+        "menu-left": {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(-100%)",
           },
           "100%": {
             opacity: "1",
@@ -25,7 +45,9 @@ module.exports = {
         },
       },
       animation: {
-        "fade-in-down": "fade-in-down 1s ease-in-out",
+        "social-icon": "social-icon 1s ease-in-out",
+        "menu-right": "menu-right 0.5s ease-in-out",
+        "menu-left": "menu-left 0.5s ease-in-out",
       },
     },
   },
