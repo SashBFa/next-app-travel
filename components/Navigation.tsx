@@ -6,12 +6,14 @@ import {
 import { faGear, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
 const Navigation = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggle = () => setIsOpen(!isOpen);
+  const router = useRouter();
 
   useEffect(() => {
     const clickOut = (e: Event) => {
@@ -44,7 +46,7 @@ const Navigation = () => {
     {
       id: 3,
       name: "Travel Advice",
-      link: "/travel",
+      link: "/advice",
     },
     {
       id: 4,
@@ -58,8 +60,8 @@ const Navigation = () => {
     },
     {
       id: 6,
-      name: "Login",
-      link: "/login",
+      name: "Sign in",
+      link: "/signin",
     },
     {
       id: 7,
@@ -80,17 +82,50 @@ const Navigation = () => {
       icon: <FontAwesomeIcon icon={faTwitter} />,
     },
   ];
+  let colorLogo: string = "";
+  let navRouter: string = "";
+  let textColor: string = "";
+  let underlineColor: string = "";
+
+  switch (router.pathname) {
+    case "/signup":
+      colorLogo = "text-red-500 cursor-pointer";
+      navRouter = "invisible";
+      break;
+    case "/signin":
+      colorLogo = "text-red-500 cursor-pointer";
+      navRouter = "invisible";
+      break;
+    case "/advice":
+      textColor = "text-black";
+      colorLogo = "text-red-500";
+      underlineColor = "after:bg-black";
+      break;
+    default:
+      colorLogo = "text-white";
+      navRouter = "visible";
+      textColor = "text-white";
+      underlineColor = "after:bg-white";
+      break;
+  }
 
   return (
-    <nav className="absolute max-w-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full left-2/4 -translate-x-2/4 pt-12 px-3 sm:px-0 flex items-start md:items-center justify-between text-white drop-shadow-md">
-      <h2 className="text-3xl w-36  flex flex-col sm:flex-row">
-        <b className="text-2xl font-normal sm:text-3xl sm:flex sm:items-center">
-          Sash{" "}
-          <FontAwesomeIcon icon={faPaperPlane} className="text-2xl sm:mx-1" />
-        </b>
-        Plane
-      </h2>
-      <div ref={ref} className="grow relative flex justify-end xl:hidden">
+    <nav
+      className={`absolute max-w-xs md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-2xl w-full left-2/4 -translate-x-2/4 pt-12 px-3 sm:px-0 flex items-start md:items-center justify-between drop-shadow-md ${textColor}`}
+    >
+      <Link href={"/"}>
+        <h2 className={`text-3xl w-36  flex flex-col sm:flex-row ${colorLogo}`}>
+          <b className="text-2xl font-normal sm:text-3xl sm:flex sm:items-center">
+            Sash{" "}
+            <FontAwesomeIcon icon={faPaperPlane} className="text-2xl sm:mx-1" />
+          </b>
+          Plane
+        </h2>
+      </Link>
+      <div
+        ref={ref}
+        className={`grow relative flex justify-end xl:hidden ${navRouter}`}
+      >
         <button onClick={toggle}>
           <FontAwesomeIcon
             icon={faGear}
@@ -129,13 +164,15 @@ const Navigation = () => {
           </div>
         )}
       </div>
-      <div className="hidden grow xl:flex justify-between items-center">
+      <div
+        className={`hidden grow xl:flex justify-between items-center ${navRouter}`}
+      >
         <ul className="flex justify-center items-center w-full">
           {roads.slice(0, 3).map((road) => {
             return (
               <li
                 key={road.id}
-                className="relative font-semibold text-xl mr-4 hover:scale-105 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-2/4 after:bg-white after:transition-all after:ease-in after:duration-700 after:-translate-x-2/4 hover:after:w-full"
+                className={`relative font-semibold text-xl mr-4 hover:scale-105 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-2/4 ${underlineColor} after:transition-all after:ease-in after:duration-700 after:-translate-x-2/4 hover:after:w-full`}
               >
                 <Link href={road.link}>{road.name}</Link>
               </li>
