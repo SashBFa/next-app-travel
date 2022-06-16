@@ -50,6 +50,14 @@ module.exports = {
         "menu-left": "menu-left 0.5s ease-in-out",
       },
     },
+    colors: {
+      transparent: "transparent",
+      black: "#000",
+      white: "#fff",
+      dark: "#18181b",
+      primary: "#075985",
+      secondary: "#07598569",
+    },
   },
   plugins: [],
 };

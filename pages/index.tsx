@@ -1,8 +1,17 @@
 import Header from "../components/Header";
 import Meta from "../components/Meta";
 import Spacing from "../components/Spacing";
+import Article from "../components/Article";
 
-const index = () => {
+type indexProps = {
+  articles: [];
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+};
+
+const index = ({ articles }: indexProps) => {
   return (
     <>
       <Meta />
@@ -18,6 +27,12 @@ const index = () => {
             to trek through jungles with. Find your beach party entourage & find
             it all with Sash Travel.
           </h2>
+
+          <div>
+            {articles.map((article: indexProps) => (
+              <Article article={article} key={article.id} />
+            ))}
+          </div>
         </Spacing>
       </div>
     </>
@@ -25,3 +40,16 @@ const index = () => {
 };
 
 export default index;
+
+export const getStaticProps = async () => {
+  const res = await fetch(
+    "https://jsonplaceholder.typicode.com/posts?_limit=12"
+  );
+  const articles: indexProps = await res.json();
+
+  return {
+    props: {
+      articles,
+    },
+  };
+};

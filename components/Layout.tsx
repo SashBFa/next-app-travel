@@ -5,6 +5,8 @@ import thunk from "redux-thunk";
 import rootReducer from "./../redux/reducers";
 import Navigation from "./Navigation";
 import { motion } from "framer-motion";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 
 type layoutProps = {
   children?: JSX.Element | JSX.Element[];
@@ -29,20 +31,33 @@ const pageTransition = {
     x: 200,
   },
 };
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#075985",
+    },
+    secondary: {
+      main: "#07598569",
+    },
+  },
+});
 
 const Layout = ({ children }: layoutProps) => {
   return (
     <Provider store={store}>
-      <Navigation />
-      <motion.main
-        initial="in"
-        animate="anim"
-        exit="in"
-        variants={pageTransition}
-        transition={{ duration: 1 }}
-      >
-        {children}
-      </motion.main>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Navigation />
+        <motion.main
+          initial="in"
+          animate="anim"
+          exit="in"
+          variants={pageTransition}
+          transition={{ duration: 1 }}
+        >
+          {children}
+        </motion.main>
+      </ThemeProvider>
     </Provider>
   );
 };
