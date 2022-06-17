@@ -8,9 +8,10 @@ import {
   Paper,
   Box,
   Grid,
+  Alert,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -22,12 +23,62 @@ export default function SignInSide() {
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const [remember, setRemember] = useState<boolean | (null & boolean)>(true);
 
+  useEffect(() => {
+    window.localStorage.setItem("remember", JSON.stringify(remember));
+    if (localStorage.getItem("email")) {
+      setEmail(localStorage.getItem("email"));
+    }
+    if (localStorage.getItem("remember") === null) {
+      setRemember(false);
+    }
+  }, [email, remember]);
+
+  if (remember === false) {
+    localStorage.removeItem("email");
+  }
+
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (remember) {
+      localStorage.setItem("email", email as string);
+    }
+
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}api/user/login`,
+      withCredentials: true,
+      data: {
+        email,
+        password,
+      },
+    })
+      .then((res) => {
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        err.response.data.errors.email
+          ? setEmailError(true)
+          : setEmailError(false);
+        err.response.data.errors.password
+          ? setPasswordError(true)
+          : setPasswordError(false);
+      });
   };
 
   return (
     <div className="h-screen">
+      {emailError && (
+        <Alert severity="error" className="text-center">
+          Oups ! Your email doesn&apos;t exist !
+        </Alert>
+      )}
+
+      {passwordError && (
+        <Alert severity="error" className="text-center">
+          Oups ! Wrong password !
+        </Alert>
+      )}
       <Grid container component="main" sx={{ height: "100%" }}>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box

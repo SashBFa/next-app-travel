@@ -8,6 +8,7 @@ import {
   Paper,
   Box,
   Grid,
+  Alert,
   Typography,
 } from "@mui/material";
 import axios from "axios";
@@ -16,7 +17,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignUpSide() {
-  const [pseudo, setPseudo] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -29,16 +29,80 @@ export default function SignUpSide() {
   const [pseudoError, setPseudoError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
-  const [localError, setLocalError] = useState<boolean>(false);
   const [controlError, setControlError] = useState<boolean>(false);
   const [termError, setTermError] = useState<boolean>(false);
+  const adresse: string = `${street} ${num}, ${city} ${postal}`;
 
   const handleRegister = async (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const terms = document.getElementById("terms") as HTMLInputElement;
+
+    if (password !== controlPassword || !terms.checked) {
+      if (password !== controlPassword) {
+        setControlError(true);
+      }
+      if (!terms.checked) {
+        setTermError(true);
+      } else {
+        await axios({
+          method: "post",
+          url: `${process.env.REACT_APP_API_URL}api/user/register`,
+          data: {
+            firstName,
+            lastName,
+            adresse,
+            email,
+            password,
+          },
+        })
+          .then((res) => {
+            window.location.href = "/signin";
+          })
+          .catch((err) => {
+            err.response.data.errors.pseudo
+              ? setPseudoError(true)
+              : setPseudoError(false);
+            err.response.data.errors.email
+              ? setEmailError(true)
+              : setEmailError(false);
+            err.response.data.errors.password
+              ? setPasswordError(true)
+              : setPasswordError(false);
+          });
+      }
+    }
   };
 
   return (
     <div className="h-screen">
+      {pseudoError && (
+        <Alert severity="error" className="text-center">
+          Oups ! Your pseudo exist already !
+        </Alert>
+      )}
+
+      {passwordError && (
+        <Alert severity="error" className="text-center">
+          Oups ! Wrong password !
+        </Alert>
+      )}
+      {controlError && (
+        <Alert severity="error" className="text-center">
+          Oups ! Yours password aren&apos;t the same !
+        </Alert>
+      )}
+      {emailError && (
+        <Alert severity="error" className="text-center">
+          Oups ! Your email exist already !
+        </Alert>
+      )}
+      {termError && (
+        <Alert severity="error" className="text-center">
+          Please, accept the terms !
+        </Alert>
+      )}
+
       <Grid container component="main" sx={{ height: "100%" }}>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
