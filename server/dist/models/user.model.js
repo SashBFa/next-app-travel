@@ -39,13 +39,24 @@ const mongoose_1 = __importStar(require("mongoose"));
 const isEmail_1 = __importDefault(require("validator/lib/isEmail"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const userSchema = new mongoose_1.Schema({
-    pseudo: {
+    firstname: {
         type: String,
         required: true,
-        minLength: 3,
+        minLength: 2,
         maxLength: 55,
         unique: true,
         trim: true,
+    },
+    lastname: {
+        type: String,
+        required: true,
+        minLength: 2,
+        maxLength: 55,
+        trim: true,
+    },
+    address: {
+        type: String,
+        required: true,
     },
     email: {
         type: String,
@@ -65,19 +76,10 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         default: "./uploads/profil/random-user.png",
     },
-    bio: {
+    role: {
         type: String,
-        max: 1024,
-    },
-    followers: {
-        type: [String],
-    },
-    following: {
-        type: [String],
-    },
-    likes: {
-        type: [String],
-    },
+        default: "member",
+    }
 }, {
     timestamps: true,
 });

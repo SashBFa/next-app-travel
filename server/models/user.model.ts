@@ -3,14 +3,13 @@ import isEmail from "validator/lib/isEmail";
 import bcrypt from "bcrypt";
 
 interface IUser {
-  pseudo: string;
+  firstname: string;
+  lastname: string;
+  address: string;
   email: string;
   password: string;
   picture: string;
-  bio: string;
-  followers: [string];
-  following: [string];
-  likes: [string];
+  role: string;
 }
 
 interface IUserDocument extends IUser, Document {}
@@ -21,13 +20,24 @@ interface IUserModel extends Model<IUserDocument> {
 
 const userSchema: Schema<IUserDocument> = new Schema(
   {
-    pseudo: {
+    firstname: {
       type: String,
       required: true,
-      minLength: 3,
+      minLength: 2,
       maxLength: 55,
       unique: true,
       trim: true,
+    },
+    lastname: {
+      type: String,
+      required: true,
+      minLength: 2,
+      maxLength: 55,
+      trim: true,
+    },
+    address: {
+      type: String,
+      required: true,
     },
     email: {
       type: String,
@@ -47,24 +57,16 @@ const userSchema: Schema<IUserDocument> = new Schema(
       type: String,
       default: "./uploads/profil/random-user.png",
     },
-    bio: {
+    role: {
       type: String,
-      max: 1024,
-    },
-    followers: {
-      type: [String],
-    },
-    following: {
-      type: [String],
-    },
-    likes: {
-      type: [String],
-    },
+      default: "member",
+    }
   },
   {
     timestamps: true,
   }
 );
+
 userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);

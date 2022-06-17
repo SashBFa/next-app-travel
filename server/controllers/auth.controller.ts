@@ -11,13 +11,13 @@ const createToken = (id: string) => {
 };
 
 export const signUp = async (req: Request, res: Response) => {
-  const { pseudo, email, password } = req.body;
+  const { firstname, lastname, address, email, password } = req.body;
   try {
-    const user = await UserModel.create({ pseudo, email, password });
+    const user = await UserModel.create({ firstname, lastname, address, email, password  });
     res.status(201).send({ user: user._id });
   } catch (err) {
-    const errors = signUpErrors(err);
-    res.status(400).send({ errors });
+    /* const errors = signUpErrors(err); */
+    res.status(400).send({ err });
   }
 };
 export const signIn = async (req: Request, res: Response) => {
@@ -29,8 +29,8 @@ export const signIn = async (req: Request, res: Response) => {
     res.cookie("jwt", token, { httpOnly: true, maxAge });
     res.status(200).json({ user: user._id });
   } catch (err) {
-    const errors = signInErrors(err);
-    res.status(400).send({ errors });
+    /* const errors = signInErrors(err); */
+    res.status(400).send({ err });
   }
 };
 
