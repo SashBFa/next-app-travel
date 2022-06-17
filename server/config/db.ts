@@ -3,8 +3,10 @@ import mongoose from "mongoose";
 mongoose
   .connect(
     "mongodb+srv://" +
-      process.env.DB_USER_PASS +
-      "@cluster0.1jnaq.mongodb.net/geegam"
+      process.env.USER +
+      ":" +
+      process.env.PSWD +
+      "@next-app-travel.hajeynl.mongodb.net"
   )
   .then(() => {
     console.log("⚡️[server]: Connect to MongoDB");
