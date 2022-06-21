@@ -5,10 +5,12 @@ export const toggleMenu: any = createSlice({
   initialState: {
     value: false,
   },
+  
   reducers: {
     toggleSwitch: (state) => {
       state.value = !state.value;
     },
+    
   },
 });
 
